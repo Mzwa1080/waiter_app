@@ -103,6 +103,20 @@ app.get('/waiters/:worker', async function(req, res, next) {
 });
 
 
+
+app.get('/days', async function(req, res, next) {
+  try {
+    let user = req.params.worker;
+    console.log(user);
+
+    res.render('listOfWorkers');
+
+  } catch (err) {
+    next(err);
+  }
+
+});
+
 let PORT = process.env.PORT || 3020;
 app.listen(PORT, function() {
   console.log('App starting on port', PORT);
