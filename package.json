@@ -18,5 +18,11 @@
     "mocha": "^5.2.0",
     "nodemon": "^1.18.4",
     "pg": "^7.4.3"
+  },
+  "dependencies": {
+    "nodemon": "^1.18.4",
+    "express-flash": "0.0.2",
+    "express": "^4.16.3",
+    "body-parser": "^1.18.3"
   }
 }
