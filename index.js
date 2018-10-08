@@ -56,16 +56,32 @@ app.get('/', async function(req, res, next) {
 
 app.post('/waiters', async function (req, res, next) {
   try {
-        let textInput = req.body.text;
-        let check = req.body.checkbox;
-       console.log(check, "found");
-       console.log(textInput);
+      let textInput = req.body.text;
+       let check = req.body.checkbox;
+       // console.log(check, "found");
+       // console.log(textInput);
       if (textInput === "" || !textInput) {
         req.flash('info', 'empty');
       }
-      let workers = await WaiterInstance.checkANDInsert(textInput);
-      console.log(workers);
-    res.render('waiter', {workers});
+      else {
+        let userData = await pool.query('select * from employees where name=$1', [textInput]);
+        let userArray = userData.rows;
+        if (userArray.length === 0) {
+            await pool.query('insert into employees(name) values($1)', [textInput]);
+            // let days=  await pool.query('select * from weekdays');
+            // days = days.rows;
+            let user = await pool.query('select * from employees where name=$1', [textInput]);
+            user = user.rows;
+            // console.log(user);
+            for (var i = 0; i < check.length; i++) {
+              let dayData = await pool.query('select * from weekdays where days=$1',[check[i]]);
+              dayData = dayData.rows;
+              await pool.query('insert into shifts(day_id,name_id) values($1,$2)', [dayData[0].id,user[0].id]);
+            }
+        }
+      }
+      let waiter = await pool.query('insert into employees(name) values($1)', [textInput]);
+    res.render('waiter', {waiter});
 
   } catch (err) {
     next(err);
@@ -85,7 +101,7 @@ app.post('/waiters', async function (req, res, next) {
 // });
 
 
-let PORT = process.env.PORT || 3090;
+let PORT = process.env.PORT || 3020;
 app.listen(PORT, function() {
   console.log('App starting on port', PORT);
 });

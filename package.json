@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha",
+    "start": "nodemon index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Mzwamadoda Shawn Louw",
   "license": "ISC",
   "devDependencies": {
     "express": "^4.16.3",
