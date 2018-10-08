@@ -15,7 +15,7 @@
 
     <div class=" row">
       <label for="first_name">First Name</label>
-      <input id="last_name" type="text" class="validate col 8" pattern="[A-Za-z]{1,40}" title="Example: Mzwa">
+      <input id="last_name" type="text" name="text" class="validate col 8" pattern="[A-Za-z]{1,40}" title="Example: Mzwa">
     </div>
     <br>
 
@@ -24,7 +24,7 @@
 
       <p class="col 2">
         <label>
-            <input type="checkbox" name="checkbox"/>
+            <input type="checkbox" name="checkbox" value="Sunday"/>
             <span>Sunday</span>
         </label>
       </p>
@@ -32,7 +32,7 @@
 
       <p class="col 2">
         <label>
-          <input type="checkbox" name="checkbox"/>
+          <input type="checkbox" name="checkbox"  value="Monday"/>
           <span>Monday</span>
         </label>
       </p>
@@ -40,7 +40,7 @@
 
       <p class="col 2">
         <label>
-          <input type="checkbox" name="checkbox"/>
+          <input type="checkbox" name="checkbox"value="Tuesday" />
           <span>Tuesday</span>
         </label>
       </p>
@@ -48,7 +48,7 @@
 
       <p class="col 2">
         <label>
-          <input type="checkbox" name="checkbox"/>
+          <input type="checkbox" name="checkbox" value="Wednesday"/>
           <span>Wednesday</span>
         </label>
       </p>
@@ -57,7 +57,7 @@
 
       <p class="col 2">
         <label>
-          <input type="checkbox" name="checkbox"/>
+          <input type="checkbox" name="checkbox" value="Thursday"/>
           <span>Thursday</span>
         </label>
       </p>
@@ -66,7 +66,7 @@
 
       <p class="col 2">
         <label>
-            <input type="checkbox" name="checkbox"/>
+            <input type="checkbox" name="checkbox" value="Friday"/>
             <span>Friday</span>
         </label>
       </p>
@@ -74,7 +74,7 @@
 
       <p class="col 2">
         <label>
-            <input type="checkbox" name="checkbox"/>
+            <input type="checkbox" name="checkbox" value="Saturday"/>
             <span>Saturday</span>
         </label>
       </p>
@@ -87,8 +87,8 @@
 
   </form>
 
-  {{#each waiter}}
-    <p class="col 12 center"> {{column name}} </p>
+  {{#each workers}}
+    <p class="col 12 center">{{days}}</p>
   {{/each}}
 
   </div>

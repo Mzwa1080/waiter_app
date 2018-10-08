@@ -6,6 +6,8 @@ let session = require('express-session');
 const pg = require("pg");
 const Pool = pg.Pool;
 
+let Waiter = require('./waiter');
+
 
 let app = express();
 
@@ -32,18 +34,19 @@ if (process.env.DATABASE_URL) {
 }
 
 const connectionString = process.env.DATABASE_URL ||
-  "postgresql://coder:coder123@localhost:5432/waiters_app";
+  "postgresql://coder:coder123@localhost:5432/waiter_app";
 
 const pool = new Pool({
   connectionString,
   ssl: useSSL
 });
 
-app.get('/', function(req, res, next) {
-  try {
-    res.render('waiter', {
+let WaiterInstance = Waiter(pool);
 
-    });
+app.get('/', async function(req, res, next) {
+  try {
+
+    res.render('waiter');
 
   } catch (err) {
     next(err);
@@ -51,9 +54,18 @@ app.get('/', function(req, res, next) {
 
 });
 
-app.post('/waiters', function (req, res, next) {
+app.post('/waiters', async function (req, res, next) {
   try {
-    res.redirect('/');
+        let textInput = req.body.text;
+        let check = req.body.checkbox;
+       console.log(check, "found");
+       console.log(textInput);
+      if (textInput === "" || !textInput) {
+        req.flash('info', 'empty');
+      }
+      let workers = await WaiterInstance.checkANDInsert(textInput);
+      console.log(workers);
+    res.render('waiter', {workers});
 
   } catch (err) {
     next(err);
@@ -61,9 +73,19 @@ app.post('/waiters', function (req, res, next) {
 
 });
 
+// app.get('/waiters/worker', async function(req, res, next) {
+//   try {
+//
+//     res.render('waiter');
+//
+//   } catch (err) {
+//     next(err);
+//   }
+//
+// });
 
 
-let PORT = process.env.PORT || 3080;
+let PORT = process.env.PORT || 3090;
 app.listen(PORT, function() {
   console.log('App starting on port', PORT);
 });
