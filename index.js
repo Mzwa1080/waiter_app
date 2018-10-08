@@ -89,16 +89,18 @@ app.post('/waiters', async function (req, res, next) {
 
 });
 
-// app.get('/waiters/worker', async function(req, res, next) {
-//   try {
-//
-//     res.render('waiter');
-//
-//   } catch (err) {
-//     next(err);
-//   }
-//
-// });
+app.get('/waiters/:worker', async function(req, res, next) {
+  try {
+    let user = req.params.worker;
+    console.log(user);
+
+    res.render('workers');
+
+  } catch (err) {
+    next(err);
+  }
+
+});
 
 
 let PORT = process.env.PORT || 3020;
