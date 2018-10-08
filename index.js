@@ -81,7 +81,7 @@ app.post('/waiters', async function (req, res, next) {
         }
       }
       let waiter = await pool.query('insert into employees(name) values($1)', [textInput]);
-    res.render('waiter', {waiter});
+    res.render('workers', {waiter});
 
   } catch (err) {
     next(err);
