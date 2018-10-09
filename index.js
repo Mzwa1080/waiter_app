@@ -106,8 +106,8 @@ app.get('/waiters/:worker', async function(req, res, next) {
 
 app.get('/days', async function(req, res, next) {
   try {
-    let user = req.params.worker;
-    console.log(user);
+    // let user = req.params.worker;
+    // console.log(user);
 
     res.render('listOfWorkers');
 
