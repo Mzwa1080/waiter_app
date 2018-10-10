@@ -75,10 +75,12 @@ app.post('/waiters', async function (req, res, next) {
          };
 
         let userArray = userData.rows;
-
           console.log(userArray, "Arrived here 1st Time!");
+
           let userId = userData.rows[0].id;
           console.log(userId, "Arrived here SECOND TIME!");
+
+
         if (userArray.length === 0) {
             await pool.query('insert into employees(name) values($1)', [textInput]);
             // let days=  await pool.query('select * from weekdays');
@@ -98,13 +100,13 @@ app.post('/waiters', async function (req, res, next) {
           console.log(result.rows, "Arrived");
           console.log(check);
 
-        // for (weekdays of check) {
-        //   for (selectedDays of result) {
-        //     if (check.days===result.days) {
-        //
-        //     }
-        //   }
-        // }
+        for (weekdays of check) {
+          for (selectedDays of result) {
+            if (check.days===result.days) {
+
+            }
+          }
+        }
         console.log(check);
         console.log(result);
       }
