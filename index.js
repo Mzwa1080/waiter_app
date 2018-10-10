@@ -45,8 +45,11 @@ let WaiterInstance = Waiter(pool);
 
 app.get('/', async function(req, res, next) {
   try {
+        let day_names = await pool.query('select * from weekdays');
+        let day_name  = day_names.rows;
+      // console.log(day_name);
 
-    res.render('waiter');
+    res.render('waiter', {day_name});
 
   } catch (err) {
     next(err);
@@ -65,7 +68,17 @@ app.post('/waiters', async function (req, res, next) {
       }
       else {
         let userData = await pool.query('select * from employees where name=$1', [textInput]);
+         // console.log(userData);
+         if (userData.rows === 0) {
+           await pool.query('insert into employees(name) values($1)', [textInput]);
+
+         };
+
         let userArray = userData.rows;
+
+          console.log(userArray, "Arrived here 1st Time!");
+          let userId = userData.rows[0].id;
+          console.log(userId, "Arrived here SECOND TIME!");
         if (userArray.length === 0) {
             await pool.query('insert into employees(name) values($1)', [textInput]);
             // let days=  await pool.query('select * from weekdays');
@@ -79,9 +92,27 @@ app.post('/waiters', async function (req, res, next) {
               await pool.query('insert into shifts(day_id,name_id) values($1,$2)', [dayData[0].id,user[0].id]);
             }
         }
+          let result = await pool.query('select days from weekdays join employees on weekdays.id=employees.id join shifts on shifts.id=weekdays.id where shifts.day_id=$1', [userId])
+          let joinedDays = result.rows;
+          return result.rows;
+          console.log(result.rows, "Arrived");
+          console.log(check);
+
+        // for (weekdays of check) {
+        //   for (selectedDays of result) {
+        //     if (check.days===result.days) {
+        //
+        //     }
+        //   }
+        // }
+        console.log(check);
+        console.log(result);
       }
-      let waiter = await pool.query('insert into employees(name) values($1)', [textInput]);
-    res.render('workers', {waiter});
+
+
+      // let waiter = await pool.query('insert into employees(name) values($1)', [textInput]);
+
+    res.render('workers');
 
   } catch (err) {
     next(err);
@@ -92,7 +123,7 @@ app.post('/waiters', async function (req, res, next) {
 app.get('/waiters/:worker', async function(req, res, next) {
   try {
     let user = req.params.worker;
-    console.log(user);
+    // console.log(user);
 
     res.render('workers');
 
