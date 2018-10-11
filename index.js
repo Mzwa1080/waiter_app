@@ -45,11 +45,13 @@ let WaiterInstance = Waiter(pool);
 
 app.get('/', async function(req, res, next) {
   try {
-        let day_names = await pool.query('select * from weekdays');
-        let day_name  = day_names.rows;
-      // console.log(day_name);
+    let day_names = await pool.query('select * from weekdays');
+    let day_name = day_names.rows;
+    // console.log(day_name);
 
-    res.render('waiter', {day_name});
+    res.render('waiter', {
+      day_name
+    });
 
   } catch (err) {
     next(err);
@@ -57,62 +59,64 @@ app.get('/', async function(req, res, next) {
 
 });
 
-app.post('/waiters', async function (req, res, next) {
+app.post('/waiters', async function(req, res, next) {
   try {
-      let textInput = req.body.text;
-       let check = req.body.checkbox;
-       // console.log(check, "found");
-       // console.log(textInput);
-      if (textInput === "" || !textInput) {
-        req.flash('info', 'empty');
-      }
-      else {
-        let userData = await pool.query('select * from employees where name=$1', [textInput]);
-         // console.log(userData);
-         if (userData.rows === 0) {
-           await pool.query('insert into employees(name) values($1)', [textInput]);
+    let textInput = req.body.text;
+    let check = req.body.checkbox;
+    // console.log(check, "found");
+    // console.log(textInput);
+    if (textInput === "" || !textInput) {
+      req.flash('info', 'empty');
+    } else {
+      let userData = await pool.query('select * from employees where name=$1', [textInput]);
+      // console.log(userData);
+      if (userData.rows.length === 0) {
+        await pool.query('insert into employees(name) values($1)', [textInput]);
+        console.log(userData.rows);
+        // res.redirect('/');
+      };
+      userData = await pool.query('select * from employees where name=$1', [textInput]);
+      let userId = userData.rows[0].id;
+      console.log(userId);
+      // userData = await pool.query('select * from employees where name=$1',[textInput]);
+      // console.log(userData);
 
-         };
+      console.log('----------');
 
-        let userArray = userData.rows;
-          console.log(userArray, "Arrived here 1st Time!");
+      let userArray = userData.rows;
+      console.log(userArray, "Arrived here 1st Time!");
 
-          let userId = userData.rows[0].id;
-          console.log(userId, "Arrived here SECOND TIME!");
-
-
-        if (userArray.length === 0) {
-            await pool.query('insert into employees(name) values($1)', [textInput]);
-            // let days=  await pool.query('select * from weekdays');
-            // days = days.rows;
-            let user = await pool.query('select * from employees where name=$1', [textInput]);
-            user = user.rows;
-            // console.log(user);
-            for (var i = 0; i < check.length; i++) {
-              let dayData = await pool.query('select * from weekdays where days=$1',[check[i]]);
-              dayData = dayData.rows;
-              await pool.query('insert into shifts(day_id,name_id) values($1,$2)', [dayData[0].id,user[0].id]);
-            }
+      if (userArray.length !== 0) {
+        // console.log(userArray.length, "userArray 1");
+        // console.log(userArray.length, "userArray 2");
+        let user = await pool.query('select * from employees where name=$1', [textInput]);
+        user = user.rows;
+        // console.log(user, 'check if the name is there!');
+        // console.log(user);
+        for (var i = 0; i < check.length; i++) {
+          let dayData = await pool.query('select * from weekdays where days=$1', [check[i]]);
+          dayData = dayData.rows;
+          // console.log(dayData);
+          await pool.query('insert into shifts(day_id,name_id) values($1,$2)', [dayData[0].id, user[0].id]);
         }
-          let result = await pool.query('select days from weekdays join employees on weekdays.id=employees.id join shifts on shifts.id=weekdays.id where shifts.day_id=$1', [userId])
-          let joinedDays = result.rows;
-          return result.rows;
-          console.log(result.rows, "Arrived");
-          console.log(check);
-
-        for (weekdays of check) {
-          for (selectedDays of result) {
-            if (check.days===result.days) {
-
-            }
-          }
-        }
-        console.log(check);
-        console.log(result);
       }
 
+      let result = await pool.query('select days from weekdays join employees on weekdays.id=employees.id join shifts on shifts.id=weekdays.id where shifts.day_id=$1', [userId])
+      // let joinedDays = result.rows;
+       // return result.rows;
+       console.log(result.rows, "Arrived");
+      // console.log(check);
 
-      // let waiter = await pool.query('insert into employees(name) values($1)', [textInput]);
+      // for (weekdays of check) {
+      //   for (selectedDays of result) {
+      //     if (check.days === result.days) {
+      //
+      //     }
+      //   }
+      // }
+      console.log(check);
+      console.log(result.rows);
+    }
 
     res.render('workers');
 
