@@ -92,6 +92,7 @@ app.post('/waiters', async function(req, res, next) {
           weekdayIds.push(dayId.rows[0].id);
         }
       }
+      
 
       for (let weekday of weekdayIds) {
         await pool.query('insert into shifts (day_id, name_id) values ($1, $2)', [weekday, userId.rows[0].id])
