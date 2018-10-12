@@ -84,7 +84,7 @@ app.get('/waiters/:worker', async (req, res, next) => {
     let user = req.params.worker;
 
     let users = await waiterInstance.GetDays();
-    
+
     res.render('workers', {
       users,
       user
@@ -100,9 +100,9 @@ app.get('/waiters/:worker', async (req, res, next) => {
 
 app.get('/days', async (req, res, next) => {
   try {
-    const day_names = await pool.query('select * from weekdays');
-    let days = day_names.rows;
-
+    // const day_names = await pool.query('select * from weekdays');
+    let days = await waiterInstance.GetDays();
+    // console.log(days);
     const results = [];
 
     for (let day of days) {
