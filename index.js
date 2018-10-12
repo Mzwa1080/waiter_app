@@ -69,9 +69,8 @@ app.post('/waiters', async (req, res, next) => {
       req.flash('info', 'empty');
     } else {
       // Converting a string into an array
-
     }
-    
+    await waiterInstance.Getusers(textInput, check);
     res.redirect('/waiters/' + textInput);
 
   } catch (err) {
@@ -84,9 +83,8 @@ app.get('/waiters/:worker', async (req, res, next) => {
   try {
     let user = req.params.worker;
 
-    let selectUser = await pool.query('select days from weekdays');
-    let users = selectUser.rows;
-    // console.log(users);
+    let users = await waiterInstance.GetDays();
+    
     res.render('workers', {
       users,
       user
