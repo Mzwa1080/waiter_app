@@ -92,7 +92,7 @@ app.post('/waiters', async function(req, res, next) {
           weekdayIds.push(dayId.rows[0].id);
         }
       }
-      
+
 
       for (let weekday of weekdayIds) {
         await pool.query('insert into shifts (day_id, name_id) values ($1, $2)', [weekday, userId.rows[0].id])
@@ -135,10 +135,11 @@ app.get('/waiters/:worker', async function(req, res, next) {
 
 app.get('/days', async function(req, res, next) {
   try {
-    // let user = req.params.worker;
-    // console.log(user);
+    let day_names = await pool.query('select * from weekdays');
+    let day_name = day_names.rows;
 
-    res.render('listOfWorkers');
+console.log(day_name);
+    res.render('listOfWorkers', {day_name});
 
   } catch (err) {
     next(err);
