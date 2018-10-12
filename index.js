@@ -72,45 +72,7 @@ app.post('/waiters', async function(req, res, next) {
       if (check && typeof check === 'string') {
         check = [check];
       }
-      // console.log(check, ".......");
-      // let userData = await pool.query('select * from employees where name=$1', [textInput]);
-      // // console.log(userData);
-      // if (userData.rows.length === 0) {
-      //   await pool.query('insert into employees(name) values($1)', [textInput]);
-      //   console.log(userData.rows);
-      //   // res.redirect('/');
-      // };
-      // userData = await pool.query('select * from employees where name=$1', [textInput]);
-      // let userId = userData.rows[0].id;
-      // console.log(userId);
-      // // userData = await pool.query('select * from employees where name=$1',[textInput]);
-      // // console.log(userData);
-      //
-      // console.log('----------');
-      //
-      // let userArray = userData.rows;
-      // console.log(userArray, "Arrived here 1st Time!");
-      //
-      // if (userArray.length !== 0) {
-      //   // console.log(userArray.length, "userArray 1");
-      //   // console.log(userArray.length, "userArray 2");
-      //   let user = await pool.query('select * from employees where name=$1', [textInput]);
-      //   user = user.rows;
-      //   // console.log(user, 'check if the name is there!');
-      //   // console.log(user);
-      //   for (var i = 0; i < check.length; i++) {
-      //     let dayData = await pool.query('select * from weekdays where days=$1', [check[i]]);
-      //     dayData = dayData.rows;
-      //     // console.log(dayData);
-      //     await pool.query('insert into shifts(day_id,name_id) values($1,$2)', [dayData[0].id, user[0].id]);
-      //   }
-      // }
-      //
-      // let result = await pool.query('select days from weekdays join employees on weekdays.id=employees.id join shifts on shifts.id=weekdays.id where shifts.day_id=$1', [userId])
-      // // let joinedDays = result.rows;
-      //  // return result.rows;
-      //  console.log(result.rows, "Arrived");
-      // // console.log(check);
+
 
 
 //------------------------------------------------------------------------------------
@@ -137,7 +99,7 @@ app.post('/waiters', async function(req, res, next) {
 
       // console.log(check);
       // console.log(result);
-      
+
       // [{
       //   day: 'Monday',
       //   waiters: ['shawn', 'Bani']
