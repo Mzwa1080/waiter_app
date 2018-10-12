@@ -105,17 +105,7 @@ app.post('/waiters', async (req, res, next) => {
 app.get('/waiters/:worker', async (req, res, next) => {
   try {
     let user = req.params.worker;
-  // //   let getUser = await pool.query('select name from employees');
-  // //   // console.log(getUser);
-  // //   let name = getUser.rows;
-  // //
-  // // // // -------------------------------------------------
-  // // let names = [];
-  // // for (let userName of name) {
-  // //   names.push(userName.name);
-  // // }
-  // // console.log(names);
-  //
+
     let selectUser = await pool.query('select days from weekdays');
     let users = selectUser.rows;
     // console.log(users);
