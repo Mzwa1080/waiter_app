@@ -6,17 +6,18 @@
 </div>
 
 <table class="col 12">
-  {{#each day_name}}
+  {{#each shifts}}
   <tr class="col 12">
-    <th class="col 2" value="{{days}}">{{days}}</th>
+    <th class="col 2" value="{{dayName}}">{{dayName}}</th>
+    {{#each waiters}}
+    <!-- Andina key that's why ndi sebenzise uTHis -->
+    <td class="col 2" value="{{this}}">{{this}}</td>
+    {{/each}}
   </tr>
   {{/each}}
 
-<tr>
-  <td class="col 2">Person1</td>
-  <td class="col 2">Person2</td>
-  <td class="col 2">Person1</td>
-</tr>
+
+
 
   </table>
 
