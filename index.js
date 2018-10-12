@@ -43,12 +43,14 @@ const pool = new Pool({
 
 let WaiterInstance = Waiter(pool);
 
-app.get('/', async (req, res, next)=> {
+app.get('/', async (req, res, next) => {
   try {
     let day_names = await pool.query('select * from weekdays');
     let day_name = day_names.rows;
     // console.log(day_name);
-
+    if (req.session.worker) {
+      res.redirect('/');
+    }
     res.render('waiter', {
       day_name
     });
@@ -59,12 +61,11 @@ app.get('/', async (req, res, next)=> {
 
 });
 
-app.post('/waiters', async (req, res, next)=> {
+app.post('/waiters', async (req, res, next) => {
   try {
     let textInput = req.body.text;
     let check = req.body.checkbox;
-    // console.log(check, "found");
-    // console.log(textInput);
+
     if (textInput === "" || !textInput) {
       req.flash('info', 'empty');
     } else {
@@ -72,10 +73,6 @@ app.post('/waiters', async (req, res, next)=> {
       if (check && typeof check === 'string') {
         check = [check];
       }
-
-
-
-      //------------------------------------------------------------------------------------
 
       let weekdayIds = [];
 
@@ -93,14 +90,11 @@ app.post('/waiters', async (req, res, next)=> {
         }
       }
 
-
       for (let weekday of weekdayIds) {
         await pool.query('insert into shifts (day_id, name_id) values ($1, $2)', [weekday, userId.rows[0].id])
       }
-
     }
-
-    res.render('workers');
+    res.redirect('/waiters/' + textInput);
 
   } catch (err) {
     next(err);
@@ -108,12 +102,27 @@ app.post('/waiters', async (req, res, next)=> {
 
 });
 
-app.get('/waiters/:worker', async (req, res, next)=> {
+app.get('/waiters/:worker', async (req, res, next) => {
   try {
     let user = req.params.worker;
-    // console.log(user);
-
-    res.render('workers');
+  // //   let getUser = await pool.query('select name from employees');
+  // //   // console.log(getUser);
+  // //   let name = getUser.rows;
+  // //
+  // // // // -------------------------------------------------
+  // // let names = [];
+  // // for (let userName of name) {
+  // //   names.push(userName.name);
+  // // }
+  // // console.log(names);
+  //
+    let selectUser = await pool.query('select days from weekdays');
+    let users = selectUser.rows;
+    // console.log(users);
+    res.render('workers', {
+      users,
+      user
+    });
 
   } catch (err) {
     next(err);
@@ -123,7 +132,7 @@ app.get('/waiters/:worker', async (req, res, next)=> {
 
 
 
-app.get('/days', async (req, res, next)=> {
+app.get('/days', async (req, res, next) => {
   try {
     const day_names = await pool.query('select * from weekdays');
     let days = day_names.rows;
@@ -132,8 +141,7 @@ app.get('/days', async (req, res, next)=> {
 
     for (let day of days) {
       let waitersResult = await pool.query(
-        'select name from shifts join employees on shifts.name_id=employees.id where day_id=$1',
-        [day.id]
+        'select name from shifts join employees on shifts.name_id=employees.id where day_id=$1', [day.id]
       );
 
       const waiters = [];
@@ -158,19 +166,6 @@ app.get('/days', async (req, res, next)=> {
       shifts: results
     });
 
-
-    // --------------------------------------------------------------------------
-    // let waiters = await pool.query('select name from employees');
-    // let person_name = waiters.rows;
-
-    // let insert = await pool.query('select name from employees join weekdays on employees.id=weekdays.id');
-    // person_name = insert.rows;
-    // console.log(day_name);
-    // console.log(person_name);
-    // res.render('listOfWorkers', {
-    //   day_name,
-    //   person_name
-    // });
 
   } catch (err) {
     next(err);

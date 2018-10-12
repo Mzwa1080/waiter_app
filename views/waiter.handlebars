@@ -22,14 +22,14 @@
     <br>
     <div class="row">
 
-         {{#each day_name}}
+      {{#each day_name}}
 
-      <p class="col 2">
-        <label>
+        <p class="col 2">
+          <label>
             <input type="checkbox" name="checkbox"{{checked}} value="{{days}}"/>
             <span>{{days}}</span>
         </label>
-      </p>
+        </p>
       {{/each}}
 
 
@@ -46,6 +46,10 @@
       <h5 href="/flash" name="flash" class="error">{{messages.info}}</h5>
     </div>
   {{/if}}
+
+  <!-- {{#each waiters}}
+    <p class="col 2" href="/waiters/{{name}}">{{name}}</p>
+  {{/each}} -->
 
 
   </div>
