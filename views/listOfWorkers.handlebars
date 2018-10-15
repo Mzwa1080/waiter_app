@@ -6,9 +6,10 @@
 </div>
 
 <table class="col 12">
+
   {{#each shifts}}
   <tr class="col 12">
-    <th class="col 2" value="{{dayName}}">{{dayName}}</th>
+    <th class="col 2 {{colour}}" value="{{dayName}}">{{dayName}}</th>
     {{#each waiters}}
     <!-- Andina key that's why ndi sebenzise uTHis -->
     <td class="col 2" value="{{this}}">{{this}}</td>
@@ -16,11 +17,8 @@
   </tr>
   {{/each}}
 
-
-
-
   </table>
-
+  <a href="/reset" class="btn waves-effect darken-2" type="" name="reset">Reset</a>
 
 
 

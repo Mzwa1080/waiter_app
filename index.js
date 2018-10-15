@@ -139,6 +139,17 @@ app.get('/days', async (req, res, next) => {
 
 });
 
+app.get('/reset', async(req, res, next) =>{
+    try {
+      await waiterInstance.reset()
+
+      res.render('listOfWorkers')
+    } catch (err) {
+      next(err);
+    }
+
+})
+
 let PORT = process.env.PORT || 3020;
 app.listen(PORT, () => {
   console.log('App starting on port', PORT);
