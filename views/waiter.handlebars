@@ -32,9 +32,11 @@
         </p>
       {{/each}}
 
+    </div>
 
-      <div class="col 12 center">
-        <button class="btn waves-effect green accent-4" type="submit" name="enter" value="">Submit</button>
+      <div class="row">
+        <button class="btn waves-effect green accent-4 col 6" type="submit" name="enter" value="">Submit</button>
+        <a href="/days" class="col 6"><i class="fas fa-users small "></i></a>
       </div>
 
   </form>
@@ -44,10 +46,6 @@
       <h5 href="/flash" name="flash" class="error">{{messages.info}}</h5>
     </div>
   {{/if}}
-
-  <!-- {{#each waiters}}
-    <p class="col 2" href="/waiters/{{name}}">{{name}}</p>
-  {{/each}} -->
 
 
   </div>

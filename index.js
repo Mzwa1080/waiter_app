@@ -25,7 +25,20 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 app.engine('handlebars', expressHandlebars({
-  defaultLayout: 'main'
+  defaultLayout: 'main',
+  helpers: {
+    "colour": function() {
+      if (Object.keys(this.waiters).length === 0) {
+        return "white";
+      } else if (Object.keys(this.waiters).length === 3) {
+        return "green";
+      } else if (Object.keys(this.waiters).length < 3) {
+        return "blue";
+      } else {
+        return "red";
+      }
+    }
+  }
 }));
 app.set('view engine', 'handlebars');
 let useSSL = false;
@@ -103,6 +116,7 @@ app.get('/days', async (req, res, next) => {
     // const day_names = await pool.query('select * from weekdays');
     let days = await waiterInstance.GetDays();
     // console.log(days);
+
     const results = [];
 
     for (let day of days) {
@@ -139,14 +153,14 @@ app.get('/days', async (req, res, next) => {
 
 });
 
-app.get('/reset', async(req, res, next) =>{
-    try {
-      await waiterInstance.reset()
+app.get('/reset', async (req, res, next) => {
+  try {
+    await waiterInstance.reset()
 
-      res.render('listOfWorkers')
-    } catch (err) {
-      next(err);
-    }
+    res.render('listOfWorkers')
+  } catch (err) {
+    next(err);
+  }
 
 })
 

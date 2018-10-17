@@ -5,11 +5,12 @@
   </div>
 </div>
 
+
 <table class="col 12">
 
   {{#each shifts}}
-  <tr class="col 12">
-    <th class="col 2 {{colour}}" value="{{dayName}}">{{dayName}}</th>
+  <tr class="col 12 {{colour}}">
+    <th class="col 6" value="{{dayName}}">{{dayName}}</th>
     {{#each waiters}}
     <!-- Andina key that's why ndi sebenzise uTHis -->
     <td class="col 2" value="{{this}}">{{this}}</td>
@@ -18,9 +19,11 @@
   {{/each}}
 
   </table>
+
+<div class="row">
   <a href="/reset" class="btn waves-effect darken-2" type="" name="reset">Reset</a>
 
+  <a href="/"><i class="fas fa-home small roster"></i></a>
 
 
-
-<a href="/"><i class="fas fa-home"></i></a>
+</div>

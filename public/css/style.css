@@ -2,3 +2,18 @@
   font-size: 25px;
   font-weight: bold;
 }
+.roster{
+  padding-top: 20%;
+}
+.green{
+  background-color: green;
+}
+.white{
+  background: white;
+}
+.blue{
+  background: blue;
+}
+.red{
+  background: red;
+}

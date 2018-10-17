@@ -6,6 +6,16 @@ module.exports = function(pool) {
     return day_names;
   }
 
+  async function getWeekdays(){
+    let day = await pool.query('select days from weekdays');
+    day = day.length;
+  }
+
+async function waiter(){
+  let name = await pool.query('select name from employees');
+  name = name.rows;
+}
+
   async function Getusers(textInput, check){
     if (check && typeof check === 'string') {
       check = [check];
@@ -69,7 +79,9 @@ return{
   GetDays,
   Getusers,
   displayWaiters,
-  reset
-}
+  reset,
+  waiter,
+  getWeekdays
+  }
 
 }
