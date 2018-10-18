@@ -95,11 +95,11 @@ app.post('/waiters', async (req, res, next) => {
 app.get('/waiters/:worker', async (req, res, next) => {
   try {
     let user = req.params.worker;
-
-    let users = await waiterInstance.GetDays();
-
+    console.log(user);
+    let shifts = await waiterInstance.getShiftsforUser(user);
+    console.log(shifts);
     res.render('workers', {
-      users,
+      shifts,
       user
     });
 

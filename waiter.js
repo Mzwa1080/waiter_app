@@ -7,8 +7,8 @@ module.exports = function(pool) {
   }
 
   async function getWeekdays(){
-    let day = await pool.query('select days from weekdays');
-    day = day.length;
+    let days = await pool.query('select * from weekdays');
+    return days.rows;
   }
 
 async function waiter(){
@@ -40,6 +40,31 @@ async function waiter(){
     for (let weekday of weekdayIds) {
       await pool.query('insert into shifts (day_id, name_id) values ($1, $2)', [weekday, userId.rows[0].id])
     }
+  }
+
+  async function getShiftsforUser(user){
+
+      if (user && user !== '') {
+          const foundUser = await pool.query('select id from employees where name=$1', [user]);
+          if (foundUser.rowCount < 1) {
+              return "Not a valid user";
+          }
+          
+          const foundShifts = await pool.query('select day_id from shifts where name_id=$1', [foundUser.rows[0].id]);
+          let weekdays = await getWeekdays();
+          weekdays.map(day => {
+          // for (let day of weekdays) {
+            for (let shift of foundShifts.rows) {
+              if(shift.day_id === day.id){
+                day.checked = 'checked';
+              }
+            }
+            console.log('day', day);
+            
+          });
+          return weekdays;
+      }
+      return await getWeekdays();
   }
 
   async function displayWaiters(){
@@ -81,7 +106,8 @@ return{
   displayWaiters,
   reset,
   waiter,
-  getWeekdays
+  getWeekdays,
+  getShiftsforUser
   }
 
 }
