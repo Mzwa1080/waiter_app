@@ -83,7 +83,7 @@ app.post('/waiters', async (req, res, next) => {
     } else {
       // Converting a string into an array
     }
-    await waiterInstance.Getusers(textInput, check);
+    await waiterInstance.assignShiftsToWaiter(textInput, check);
     res.redirect('/waiters/' + textInput);
 
   } catch (err) {

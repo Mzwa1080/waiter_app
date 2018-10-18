@@ -3,7 +3,7 @@ module.exports = function(pool) {
   async function GetDays () {
     let day_names = await pool.query('select * from weekdays');
      day_names = day_names.rows;
-    return day_names;
+      return day_names;
   }
 
   async function getWeekdays(){
@@ -16,7 +16,7 @@ async function waiter(){
   name = name.rows;
 }
 
-  async function Getusers(textInput, check){
+  async function assignShiftsToWaiter(textInput, check){
     if (check && typeof check === 'string') {
       check = [check];
     }
@@ -102,7 +102,7 @@ async function waiter(){
 
 return{
   GetDays,
-  Getusers,
+  assignShiftsToWaiter,
   displayWaiters,
   reset,
   waiter,

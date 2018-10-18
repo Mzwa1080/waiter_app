@@ -9,30 +9,40 @@ const pool = new Pool({
     connectionString
 });
 
-describe('The Waiters App', async function(){
-// ----******<(-_-)>-----  Instance -------<(-_-)> *****-
+describe('The Waiters App', async function () {
+    // ----******<(-_-)>-----  Instance -------<(-_-)> *****-
+    beforeEach(async function () {
+        // clean the tables before each test run
+        await pool.query("delete from employees"),
+        await pool.query("delete from shifts");
+    });
     const waiters = Waiter(pool);
 
-    it('should return All days of the week', async function(){
+    it('should return All days of the week', async function () {
+        const weekdays = await waiters.GetDays();
+        for (let day of weekdays) {
+            delete day.id;
+        }
 
-        assert.deepEqual(await waiters.GetDays(),
-                                                 [ { id: 1, days: 'Sunday' },
-                                                 { id: 2, days: 'Monday' },
-                                                 { id: 3, days: 'Tuesday' },
-                                                 { id: 4, days: 'Wednesday' },
-                                                 { id: 5, days: 'Thursday' },
-                                                 { id: 6, days: 'Friday' },
-                                                 { id: 7, days: 'Saturday' } ]);
+        assert.deepEqual(weekdays,
+            [{ days: 'Sunday' },
+            { days: 'Monday' },
+            { days: 'Tuesday' },
+            { days: 'Wednesday' },
+            { days: 'Thursday' },
+            { days: 'Friday' },
+            { days: 'Saturday' }]);
     });
 
-    it('should return a waiter with day(s) of the week', async function(){
+    it('should add the name of the user & assign shifts to them', async function(){
+       let insert = await waiters.getShiftsforUser('Mzwa', 'Monday');
+       
+        console.log(insert);
+        
+       assert.deepEqual(insert, 'Mzwa');
+    })
 
-      console.log(await waiters.Getusers("Amanda", "Sunday"));
-
-        assert.deepEqual(await waiters.waiter(), 'Amanda');
-    });
-
-    after(function(){
+    after(function () {
         pool.end();
     })
 });
