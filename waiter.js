@@ -13,7 +13,8 @@ module.exports = function(pool) {
 
 async function waiter(){
   let name = await pool.query('select name from employees');
-  name = name.rows;
+   name = name.rows;
+  return name.rows;
 }
 
   async function assignShiftsToWaiter(textInput, check){
@@ -67,43 +68,42 @@ async function waiter(){
       return await getWeekdays();
   }
 
-  async function displayWaiters(){
-    const results = [];
-    let days = await pool.query('select * from weekdays');
-    days = days.rows;
+  // async function displayWaiters(){
+  //   const results = [];
+  //   let days = await pool.query('select * from weekdays');
+  //   days = days.rows;
 
-    for (let day of days) {
-      let waitersResult = await pool.query(
-        'select name from shifts join employees on shifts.name_id=employees.id where day_id=$1', [day.id]
-      );
+  //   for (let day of days) {
+  //     let waitersResult = await pool.query(
+  //       'select name from shifts join employees on shifts.name_id=employees.id where day_id=$1', [day.id]
+  //     );
 
-      const waiters = [];
-      // waitersResult.rows.map(function(waiter){
-      //   console.log('waiter', waiter);
-      //   waiters.push(waiter.name);
-      // });
+  //     const waiters = [];
+  //     // waitersResult.rows.map(function(waiter){
+  //     //   console.log('waiter', waiter);
+  //     //   waiters.push(waiter.name);
+  //     // });
 
-      for (let waiter of waitersResult.rows) {
-        waiters.push(waiter.name);
-      }
+  //     for (let waiter of waitersResult.rows) {
+  //       waiters.push(waiter.name);
+  //     }
 
-      results.push({
-        dayName: day.days,
-        waiters
-      })
-    }
-  }
+  //     results.push({
+  //       dayName: day.days,
+  //       waiters
+  //     })
+  //   }
+  // }
 
   async function reset(){
     await pool.query('delete from shifts');
     await pool.query('delete from employees');
-
   }
 
 return{
   GetDays,
   assignShiftsToWaiter,
-  displayWaiters,
+  // displayWaiters,
   reset,
   waiter,
   getWeekdays,

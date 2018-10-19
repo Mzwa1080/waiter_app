@@ -13,8 +13,8 @@ describe('The Waiters App', async function () {
     // ----******<(-_-)>-----  Instance -------<(-_-)> *****-
     beforeEach(async function () {
         // clean the tables before each test run
-        await pool.query("delete from employees"),
-        await pool.query("delete from shifts");
+        await pool.query("delete from shifts"),
+        await pool.query("delete from employees")
     });
     const waiters = Waiter(pool);
 
@@ -34,13 +34,22 @@ describe('The Waiters App', async function () {
             { days: 'Saturday' }]);
     });
 
-    it('should add the name of the user & assign shifts to them', async function(){
-       let insert = await waiters.getShiftsforUser('Mzwa', 'Monday');
-       
-        console.log(insert);
+    it('should return "NOT A VALID USER" if there\'s no user/waiter inserted', async function(){
+       // console.log(await waiters.getShiftsforUser('Mzwa', 'Monday'));
         
-       assert.deepEqual(insert, 'Mzwa');
+       assert.deepEqual(await waiters.getShiftsforUser('Mzwa', 'Monday'), 'Not a valid user');
     })
+
+
+    it('should return the ID of the user/waiter', async function(){
+        // console.log(await waiters.getShiftsforUser('Mzwa', 'Monday'));
+         await waiters.assignShiftsToWaiter('Mzwa', 'Monday')
+        //  await waiters.assignShiftsToWaiter('Ben', 'Saturday')
+
+        console.log(await waiters.assignShiftsToWaiter('Mzwa', 'Monday'));
+         
+        assert.deepEqual(await waiters.assignShiftsToWaiter(), '1');
+     })
 
     after(function () {
         pool.end();

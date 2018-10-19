@@ -28,12 +28,10 @@ app.engine('handlebars', expressHandlebars({
   defaultLayout: 'main',
   helpers: {
     "colour": function() {
-      if (Object.keys(this.waiters).length === 0) {
+      if (Object.keys(this.waiters).length < 3) {
         return "white";
       } else if (Object.keys(this.waiters).length === 3) {
         return "green";
-      } else if (Object.keys(this.waiters).length < 3) {
-        return "blue";
       } else {
         return "red";
       }
