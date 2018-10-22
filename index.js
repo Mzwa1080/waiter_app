@@ -89,10 +89,8 @@ app.post('/waiters', async (req, res, next) => {
       return;
     }
 
-    // if (textInput === "" || !textInput) {
-    //   req.flash('info', 'Please enter your name!');
-    // }
-    // await waiterInstance.assignShiftsToWaiter(textInput, check);
+  
+     await waiterInstance.assignShiftsToWaiter(textInput, check);
     res.redirect('/waiters/' + textInput);
 
   } catch (err) {
@@ -104,9 +102,9 @@ app.post('/waiters', async (req, res, next) => {
 app.get('/waiters/:worker', async (req, res, next) => {
   try {
     let user = req.params.worker;
-    console.log(user);
+    // console.log(user);
     let shifts = await waiterInstance.getShiftsforUser(user);
-    console.log(shifts);
+    // console.log(shifts);
     res.render('workers', {
       shifts,
       user
@@ -166,7 +164,7 @@ app.get('/reset', async (req, res, next) => {
   try {
     await waiterInstance.reset()
 
-    res.render('listOfWorkers')
+    res.redirect('/days')
   } catch (err) {
     next(err);
   }
