@@ -18,6 +18,10 @@ async function waiter(){
 }
 
   async function assignShiftsToWaiter(textInput, check){
+    if(textInput === undefined || !textInput){
+      return "Please insert your name!";
+    }
+ 
     if (check && typeof check === 'string') {
       check = [check];
     }
@@ -30,8 +34,13 @@ async function waiter(){
       userId = await pool.query('select id from employees where name=$1', [textInput]);
     }
 
-
+    if(!check || check === undefined){
+      return "Please select a day!";
+    }
     for (let day of check) {
+     
+      console.log(check, "check!!!");
+      
       let dayId = await pool.query('select id from weekdays where days=$1', [day]);
       if (dayId.rowCount > 0) {
         weekdayIds.push(dayId.rows[0].id);
@@ -48,7 +57,7 @@ async function waiter(){
       if (user && user !== '') {
           const foundUser = await pool.query('select id from employees where name=$1', [user]);
           if (foundUser.rowCount < 1) {
-              return "Not a valid user";
+              return "Please select a day!";
           }
           
           const foundShifts = await pool.query('select day_id from shifts where name_id=$1', [foundUser.rows[0].id]);

@@ -76,12 +76,23 @@ app.post('/waiters', async (req, res, next) => {
     let textInput = req.body.text;
     let check = req.body.checkbox;
 
-    if (textInput === "" || !textInput) {
-      req.flash('info', 'empty');
-    } else {
-      // Converting a string into an array
+
+    if(textInput === "" || textInput === undefined){
+      req.flash('info', 'Please insert your name!');
+      res.redirect('/');
+      return;
     }
-    await waiterInstance.assignShiftsToWaiter(textInput, check);
+
+    if(check === "" || check === undefined){
+      req.flash('info', 'Please insert your shist!');
+      res.redirect('/');
+      return;
+    }
+
+    // if (textInput === "" || !textInput) {
+    //   req.flash('info', 'Please enter your name!');
+    // }
+    // await waiterInstance.assignShiftsToWaiter(textInput, check);
     res.redirect('/waiters/' + textInput);
 
   } catch (err) {
@@ -162,7 +173,7 @@ app.get('/reset', async (req, res, next) => {
 
 })
 
-let PORT = process.env.PORT || 3023;
+let PORT = process.env.PORT || 3202;
 app.listen(PORT, () => {
   console.log('App starting on port', PORT);
 });
