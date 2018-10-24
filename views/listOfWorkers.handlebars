@@ -1,21 +1,24 @@
-<div class="row">
-  
-    <h3 class="center">Waiters Roster</h3>
-    <p class="col 4">Page showing people that are going to be available on that particular day.</p>
+    <div class="row">
 
-  <div class="col 8">
-    <a href="/reset" class="btn waves-effect darken-2  right " type="" name="reset">Reset</a>
-  <a href="/"><i class="fas fa-home small roster home  right top"></i></a>
-  </div>
+      <h3 class="center">Waiters Roster</h3>
+      <p class="col 4">Page showing people that are going to be available on that particular day.</p>
+
+    <div class="col 8">
+      {{!-- <a href="/reset" class="btn waves-effect darken-2  right " type="" name="reset">Reset</a> --}}
+    <a href="/"><i class="fas fa-home small roster home  right top"></i></a>
+    <a href="/reset"><i class="fa fa-trash small btn waves-effect darken-2  right" aria-hidden="true"></i></a>
+
+    </div>
 
 
-</div>
+    </div>
 
-{{!-- <div class="row right "> --}}
 
-{{!-- </div> --}}
+ <div class="row right "> 
 
-<table class="col 12">
+ </div>
+
+ <table class="col 12">
 
   {{#each shifts}}
   <tr class="col 12 {{colour}}">
@@ -27,6 +30,39 @@
   </tr>
   {{/each}}
 
+
+
   </table>
+
+  {{!-- <table class="col 12">
+{{#each shifts}}
+<th class="col 2 {{color}}" value="{{dayName}}">{{dayName}}</th>
+
+{{#each waiters}}
+    <td class="co 2" value="{{this}}" >{{this}}</td>
+{{/each}}
+{{/each}}
+</table> --}}
+
+
+
+
+
+
+  {{!-- <div class="row">
+    {{#each shifts}}
+    <div class="{{dayName}}" value="{{dayName}}"><span>{{dayName}}</span></div>
+    {{#each waiters}}
+    <p><span class="{{this}}" value="{{this}}">{{this}}</span></p>
+    {{/each}}
+  </div>
+
+  {{/each}} --}}
+
+</div>
+
+
+
+
 
 

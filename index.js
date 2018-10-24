@@ -147,7 +147,7 @@ app.get('/days', async (req, res, next) => {
       })
     }
 
-    console.log("shifts", results);
+    // console.log("shifts", results);
 
     res.render('listOfWorkers', {
       shifts: results

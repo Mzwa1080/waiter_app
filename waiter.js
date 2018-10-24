@@ -56,6 +56,7 @@ module.exports = function (pool) {
       await pool.query('insert into shifts (day_id, name_id) values ($1, $2)', [weekday, userId.rows[0].id]);
       
     }
+    
   }
 
   async function getShiftsforUser(user) {
