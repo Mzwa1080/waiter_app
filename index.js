@@ -7,7 +7,7 @@ const pg = require("pg");
 const Pool = pg.Pool;
 
 let Waiter = require('./waiter');
-
+let waiterRoute = require('./routes');
 
 let app = express();
 
@@ -53,123 +53,109 @@ const pool = new Pool({
 });
 
 let waiterInstance = Waiter(pool);
+let newWaiterRoutes = waiterRoute(waiterInstance);
 
-app.get('/', async (req, res, next) => {
-  try {
-    let day_name = await waiterInstance.GetDays();
-    // console.log(day_name);
-    if (req.session.worker) {
-      res.redirect('/');
-    }
-    res.render('waiter', {
-      day_name
-    });
+app.get('/', newWaiterRoutes.home);
 
-  } catch (err) {
-    next(err);
-  }
-
-});
-
-app.post('/waiters', async (req, res, next) => {
-  try {
-    let textInput = req.body.text;
-    let check = req.body.checkbox;
+// app.post('/waiters', async (req, res, next) => {
+//   try {
+//     let textInput = req.body.text;
+//     let check = req.body.checkbox;
 
 
-    if(textInput === "" || textInput === undefined){
-      req.flash('info', 'Please insert your name!');
-      res.redirect('/');
-      return;
-    }
+//     if(textInput === "" || textInput === undefined){
+//       req.flash('info', 'Please insert your name!');
+//       res.redirect('/');
+//       return;
+//     }
 
-    if(check === "" || check === undefined){
-      req.flash('info', 'Please insert your shist!');
-      res.redirect('/');
-      return;
-    }
+//     if(check === "" || check === undefined){
+//       req.flash('info', 'Please insert your shist!');
+//       res.redirect('/');
+//       return;
+//     }
 
   
-     await waiterInstance.assignShiftsToWaiter(textInput, check);
-    res.redirect('/waiters/' + textInput);
+//      await waiterInstance.assignShiftsToWaiter(textInput, check);
+//     res.redirect('/waiters/' + textInput);
 
-  } catch (err) {
-    next(err);
-  }
+//   } catch (err) {
+//     next(err);
+//   }
 
-});
+// });
 
-app.get('/waiters/:worker', async (req, res, next) => {
-  try {
-    let user = req.params.worker;
-    // console.log(user);
-    let shifts = await waiterInstance.getShiftsforUser(user);
-    // console.log(shifts);
-    res.render('workers', {
-      shifts,
-      user
-    });
+// app.get('/waiters/:worker', async (req, res, next) => {
+//   try {
+//     let user = req.params.worker;
+//     // console.log(user);
+//     let shifts = await waiterInstance.getShiftsforUser(user);
+//     // console.log(shifts);
+//     res.render('workers', {
+//       shifts,
+//       user
+//     });
 
-  } catch (err) {
-    next(err);
-  }
+//   } catch (err) {
+//     next(err);
+//   }
 
-});
-
-
-
-app.get('/days', async (req, res, next) => {
-  try {
-    // const day_names = await pool.query('select * from weekdays');
-    let days = await waiterInstance.GetDays();
-    // console.log(days);
-
-    const results = [];
-
-    for (let day of days) {
-      let waitersResult = await pool.query(
-        'select name from shifts join employees on shifts.name_id=employees.id where day_id=$1', [day.id]
-      );
-
-      const waiters = [];
-      // waitersResult.rows.map(function(waiter){
-      //   console.log('waiter', waiter);
-      //   waiters.push(waiter.name);
-      // });
-
-      for (let waiter of waitersResult.rows) {
-        waiters.push(waiter.name);
-      }
-
-      results.push({
-        dayName: day.days,
-        waiters
-      })
-    }
-
-    // console.log("shifts", results);
-
-    res.render('listOfWorkers', {
-      shifts: results
-    });
+// });
 
 
-  } catch (err) {
-    next(err);
-  }
 
-});
+// app.get('/days', async (req, res, next) => {
+//   try {
+//     // const day_names = await pool.query('select * from weekdays');
+//     let days = await waiterInstance.GetDays();
+//     // console.log(days);
 
-app.get('/reset', async (req, res, next) => {
-  try {
-    await waiterInstance.reset()
+//     const results = [];
 
-    res.redirect('/days')
-  } catch (err) {
-    next(err);
-  }
+//     for (let day of days) {
+//       let waitersResult = await pool.query(
+//         'select name from shifts join employees on shifts.name_id=employees.id where day_id=$1', [day.id]
+//       );
 
-})
+//       const waiters = [];
+//       // waitersResult.rows.map(function(waiter){
+//       //   console.log('waiter', waiter);
+//       //   waiters.push(waiter.name);
+//       // });
+
+//       for (let waiter of waitersResult.rows) {
+//         waiters.push(waiter.name);
+//       }
+
+//       results.push({
+//         dayName: day.days,
+//         waiters
+//       })
+//     }
+
+//     // console.log("shifts", results);
+
+//     res.render('listOfWorkers', {
+//       shifts: results
+//     });
+
+
+//   } catch (err) {
+//     next(err);
+//   }
+
+// });
+
+// app.get('/reset', async (req, res, next) => {
+//   try {
+//     await waiterInstance.reset()
+
+//     res.redirect('/days')
+//   } catch (err) {
+//     next(err);
+//   }
+
+// })
 
 let PORT = process.env.PORT || 3202;
 app.listen(PORT, () => {
