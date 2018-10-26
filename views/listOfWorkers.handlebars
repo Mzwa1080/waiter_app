@@ -13,28 +13,44 @@
 
     </div>
 
-
- <div class="row right "> 
-
- </div>
-
+{{!-- 
  <table class="col 12">
 
   {{#each shifts}}
-  <tr class="col 12 {{colour}}">
-    <th class="col 6" value="{{dayName}}">{{dayName}}</th>
+
+  <tr class="col 2 {{colour}}">
+
+    <th class="col 4" value="{{dayName}}">{{dayName}}</th>
+
     {{#each waiters}}
     <!-- Andina key that's why ndi sebenzise uTHis -->
     <td class="col 2" value="{{this}}">{{this}}</td>
+    
     {{/each}}
   </tr>
-  {{/each}}
+  {{/each}} --}}
+
+
+<div class="row">
+   {{#each shifts}}
+  <div class="col 2">
+    <h5 class="col 2" value="{{dayName}}">{{dayName}}</h5>
+  </div>
+
+    {{#each waiters}}
+<div>
+    <h6 class="col 2" value="{{this}}"> {{this}}</h6>
+</div>
+    {{/each}}
+    {{/each}}
+</div>
 
 
 
-  </table>
 
-  {{!-- <table class="col 12">
+  {{!-- </table>
+
+  <table class="col 12">
 {{#each shifts}}
 <th class="col 2 {{color}}" value="{{dayName}}">{{dayName}}</th>
 
@@ -44,7 +60,28 @@
 {{/each}}
 </table> --}}
 
+{{!-- <table>
+  
 
+  <tr>
+    {{#each shifts}}
+<th class="col 2 {{color}}" value="{{dayName}}">{{dayName}}</th>
+  
+
+  </tr>
+  
+  
+
+  <tr>
+    {{#each waiters}}
+    <td class="co 2" value="{{this}}" >{{this}}</td>
+    {{/each}}
+  </tr>
+  {{/each}}
+
+  
+
+</table> --}}
 
 
 
