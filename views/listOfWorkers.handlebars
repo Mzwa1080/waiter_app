@@ -1,105 +1,62 @@
-    <div class="row">
+<div class="row">
 
-      <h3 class="center">Waiters Roster</h3>
-      <p class="col 4">Page showing people that are going to be available on that particular day.</p>
+  <h3 class="center">Waiters Roster</h3>
+  <p class="col 4">Page showing people that are going to be available on that particular day.</p>
 
-    <div class="col 8">
-      {{!-- <a href="/reset" class="btn waves-effect darken-2  right " type="" name="reset">Reset</a> --}}
+  <div class="col 8">
+    {{!-- <a href="/reset" class="btn waves-effect darken-2  right " type="" name="reset">Reset</a> --}}
     <a href="/"><i class="fas fa-home small roster home  right top"></i></a>
     <a href="/reset"><i class="fa fa-trash small btn waves-effect darken-2  right" aria-hidden="true"></i></a>
 
-    </div>
+  </div>
 
 
-    </div>
+</div>
 
-{{!-- 
- <table class="col 12">
+{{!-- <table class="col 12">
+  <tr>
+    {{#each shifts}}
+    <td class="col 2 {{color}}" value="{{dayName}}">{{dayName}}</td>
+    {{/each}}
+  </tr>
 
+  <tr>
+    {{#each shifts}}
+    <td class="day-waiters">
+      {{#each waiters}} 
+      <tr>
+        <td>{{this}}</td>
+      </tr>
+       {{/each}} 
+    </td>
+    {{/each}}
+  </tr>
+</table> --}}
+
+
+<div class="">
   {{#each shifts}}
-
-  <tr class="col 2 {{colour}}">
-
-    <th class="col 4" value="{{dayName}}">{{dayName}}</th>
-
+  <div style="
+    display:table-cell;
+    border:1px solid #ccc;
+    width:100%;
+    max-width:300px;
+    padding: 1rem;
+    margin-right: 0.5rem;
+    " class="{{colour}}">
+    <h4>{{dayName}}</h4>
     {{#each waiters}}
-    <!-- Andina key that's why ndi sebenzise uTHis -->
-    <td class="col 2" value="{{this}}">{{this}}</td>
-    
+    <p>{{this}}</p>
     {{/each}}
-  </tr>
-  {{/each}} --}}
-
-
-<div class="row">
-   {{#each shifts}}
-  <div class="col 2">
-    <h5 class="col 2" value="{{dayName}}">{{dayName}}</h5>
   </div>
-
-    {{#each waiters}}
-<div>
-    <h6 class="col 2" value="{{this}}"> {{this}}</h6>
-</div>
-    {{/each}}
-    {{/each}}
-</div>
-
-
-
-
-  {{!-- </table>
-
-  <table class="col 12">
-{{#each shifts}}
-<th class="col 2 {{color}}" value="{{dayName}}">{{dayName}}</th>
-
-{{#each waiters}}
-    <td class="co 2" value="{{this}}" >{{this}}</td>
-{{/each}}
-{{/each}}
-</table> --}}
-
-{{!-- <table>
-  
-
-  <tr>
-    {{#each shifts}}
-<th class="col 2 {{color}}" value="{{dayName}}">{{dayName}}</th>
-  
-
-  </tr>
-  
-  
-
-  <tr>
-    {{#each waiters}}
-    <td class="co 2" value="{{this}}" >{{this}}</td>
-    {{/each}}
-  </tr>
   {{/each}}
+</div>  
 
-  
+{{!-- {
+  dayName: "monday",
+  waiters: ['Amanda', 'Mzwa']
+} --}}
 
-</table> --}}
 
-
-
-
-  {{!-- <div class="row">
-    {{#each shifts}}
-    <div class="{{dayName}}" value="{{dayName}}"><span>{{dayName}}</span></div>
-    {{#each waiters}}
-    <p><span class="{{this}}" value="{{this}}">{{this}}</span></p>
-    {{/each}}
-  </div>
-
-  {{/each}} --}}
 
 </div>
-
-
-
-
-
-

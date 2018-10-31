@@ -34,10 +34,10 @@ describe('The Waiters App', async function () {
             { days: 'Saturday' }]);
     });
 
-    it('should return "NOT A VALID USER" if there\'s no user/waiter inserted', async function(){
+    it('should return "PLEASE SELECT A DAY!" if there\'s no DAY selected', async function(){
        // console.log(await waiters.getShiftsforUser('Mzwa', 'Monday'));
         
-       assert.deepEqual(await waiters.getShiftsforUser('Mzwa', 'Monday'), 'Not a valid user');
+       assert.deepEqual(await waiters.getShiftsforUser('Mzwa'), 'Please select a day!');
     })
 
 

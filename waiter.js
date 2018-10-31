@@ -76,7 +76,7 @@ module.exports = function (pool) {
             day.checked = 'checked';
           }
         }
-        console.log('day', day);
+         console.log('day', day);
 
       });
       return weekdays;
