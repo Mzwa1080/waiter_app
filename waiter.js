@@ -1,7 +1,7 @@
 module.exports = function (pool) {
 
-  async function GetDays() {
-    let day_names = await pool.query('select * from weekdays');
+  async function InsertPeople(name) {
+    let day_names = await pool.query('insert into employees(name) values($1)', [name]);
     day_names = day_names.rows;
     return day_names;
   }
@@ -24,11 +24,11 @@ module.exports = function (pool) {
 
     let weekdayIds = [];
     if (textInput === "") {
-      return "sukunya!"
+      return "Enter your name!"
     }
 
     textInput = textInput.charAt(0).toUpperCase() + textInput.slice(1);
-    console.log("username", textInput);
+    // console.log("username", textInput);
     
     let userId = await pool.query('select id from employees where name=$1', [textInput]);
     if (userId.rowCount < 1) {
@@ -43,7 +43,7 @@ module.exports = function (pool) {
         delete check[i];
       }
     }
-    console.log('userShift----', userShifts);
+    // console.log('userShift----', userShifts);
 
     for (let day of check) {
       let dayId = await pool.query('select id from weekdays where days=$1', [day]);
@@ -84,8 +84,12 @@ module.exports = function (pool) {
     return await getWeekdays();
   }
 
-
-
+  
+  // {
+  //   dayName = "Monday"
+  //   waiters= ['Mzwa', 'Ben']  
+  // }
+  
   async function reset() {
     await pool.query('delete from shifts');
     await pool.query('delete from employees');
@@ -93,7 +97,7 @@ module.exports = function (pool) {
   }
 
   return {
-    GetDays,
+    InsertPeople,
     assignShiftsToWaiter,
     // displayWaiters,
     reset,

@@ -10,7 +10,7 @@ const pool = new Pool({
 });
 
 describe('The Waiters App', async function () {
-    // ----******<(-_-)>-----  Instance -------<(-_-)> *****-
+ // ----******<(-_-)>-----  Instance -------<(-_-)> *****-
     beforeEach(async function () {
         // clean the tables before each test run
         await pool.query("delete from shifts"),
@@ -19,7 +19,7 @@ describe('The Waiters App', async function () {
     const waiters = Waiter(pool);
 
     it('should return All days of the week', async function () {
-        const weekdays = await waiters.GetDays();
+        const weekdays = await waiters.getWeekdays();
         for (let day of weekdays) {
             delete day.id;
         }
@@ -35,21 +35,35 @@ describe('The Waiters App', async function () {
     });
 
     it('should return "PLEASE SELECT A DAY!" if there\'s no DAY selected', async function(){
-       // console.log(await waiters.getShiftsforUser('Mzwa', 'Monday'));
         
        assert.deepEqual(await waiters.getShiftsforUser('Mzwa'), 'Please select a day!');
     })
 
-
-    it('should return the ID of the user/waiter', async function(){
-         await waiters.assignShiftsToWaiter('Mzwa', 'Monday')
-        
-        // console.log(await waiters.assignShiftsToWaiter('Mzwa', 'Monday'));
+    it('should return ENter your name if there\'s no name entered',async function(){
+       await waiters.assignShiftsToWaiter();
          
-        // assert.deepEqual(await waiters.assignShiftsToWaiter(), '1');
+
+        assert.deepEqual("Enter your name!", await waiters.assignShiftsToWaiter());
+    })
+
+    it('should return Checked/Selected days', async function(){
+         insertNameAndDay = await waiters.assignShiftsToWaiter('Mzwa', "Monday")
+         await waiters.InsertPeople('Mzwa');
+         console.log('names & days ----', insertNameAndDay);
+         
+         await waiters.getShiftsforUser('Mzwa', 'Monday')
+        //  console.log(await waiters.getShiftsforUser());
+         
+        // console.log(await waiters.getShiftsforUser('Mzwa', 'Monday'));
+        
+         assert.deepEqual(await waiters.getShiftsforUser() );
      })
+
 
     after(function () {
         pool.end();
     })
 });
+
+
+// 98

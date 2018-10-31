@@ -4,27 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "nyc mocha",
     "start": "node index.js"
   },
   "keywords": [],
   "author": "Mzwamadoda Shawn Louw",
   "license": "ISC",
   "devDependencies": {
-    "express": "^4.16.3",
-    "express-flash": "0.0.2",
-    "express-handlebars": "^3.0.0",
-    "express-session": "^1.15.6",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.4",
-    "pg": "^7.4.3"
+    "nyc": "^13.1.0"
   },
   "dependencies": {
     "express-handlebars": "^3.0.0",
-    "mocha": "^5.2.0",
     "pg": "^7.4.3",
     "express-session": "^1.15.6",
-    "nodemon": "^1.18.4",
     "express-flash": "0.0.2",
     "express": "^4.16.3",
     "body-parser": "^1.18.3"
