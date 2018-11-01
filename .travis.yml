@@ -1,0 +1,17 @@
+
+language: node_js
+
+env:
+     - DB=postgresql://postgres@localhost:5432/waiter_test
+
+node_js:
+   - "8.9.4"
+
+before_script:
+  - psql -c 'create database waiter_test;' -U postgres
+  - psql -U postgres -d waiter_test -a -f tables.sql
+
+addons:
+    apt:
+    packages:
+    - postgresql-server-dev-9.2

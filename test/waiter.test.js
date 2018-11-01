@@ -39,25 +39,24 @@ describe('The Waiters App', async function () {
        assert.deepEqual(await waiters.getShiftsforUser('Mzwa'), 'Please select a day!');
     })
 
-    it('should return ENter your name if there\'s no name entered',async function(){
+    it('should return "ENTER YOUR NAME" if there\'s no name entered',async function(){
        await waiters.assignShiftsToWaiter();
-         
-
+        
         assert.deepEqual("Enter your name!", await waiters.assignShiftsToWaiter());
     })
 
-    it('should return Checked/Selected days', async function(){
-         insertNameAndDay = await waiters.assignShiftsToWaiter('Mzwa', "Monday")
-         await waiters.InsertPeople('Mzwa');
-         console.log('names & days ----', insertNameAndDay);
+    // it('should return Checked/Selected days', async function(){
+    //      insertNameAndDay = await waiters.assignShiftsToWaiter('Mzwa', "Monday")
+    //      await waiters.InsertPeople('Mzwa');
+    //     //  console.log('names & days ----', insertNameAndDay);
          
-         await waiters.getShiftsforUser('Mzwa', 'Monday')
-        //  console.log(await waiters.getShiftsforUser());
+    //      await waiters.getShiftsforUser('Mzwa', 'Monday')
+    //     //  console.log(await waiters.getShiftsforUser());
          
-        // console.log(await waiters.getShiftsforUser('Mzwa', 'Monday'));
+    //     // console.log(await waiters.getShiftsforUser('Mzwa', 'Monday'));
         
-         assert.deepEqual(await waiters.getShiftsforUser() );
-     })
+    //      assert.deepEqual(await waiters.getShiftsforUser() );
+    //  })
 
 
     after(function () {

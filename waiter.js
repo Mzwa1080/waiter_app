@@ -24,7 +24,7 @@ module.exports = function (pool) {
 
     let weekdayIds = [];
     if (textInput === "") {
-      return "Enter your name!"
+      return "Enter your name!";
     }
 
     textInput = textInput.charAt(0).toUpperCase() + textInput.slice(1);
@@ -76,7 +76,7 @@ module.exports = function (pool) {
             day.checked = 'checked';
           }
         }
-         console.log('day', day);
+        //  console.log('day', day);
 
       });
       return weekdays;
