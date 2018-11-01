@@ -1,9 +1,13 @@
 module.exports = function (pool) {
 
   async function InsertPeople(name) {
-    let day_names = await pool.query('insert into employees(name) values($1)', [name]);
-    day_names = day_names.rows;
-    return day_names;
+    await pool.query('insert into employees(name) values($1)', [name]);
+
+  }
+
+  async function getAllWaiters(){
+    let all = await pool.query('select * from employees')
+    return all.rows;
   }
 
   async function getWeekdays() {
@@ -23,7 +27,7 @@ module.exports = function (pool) {
     }
 
     let weekdayIds = [];
-    if (textInput === "") {
+    if (textInput === "" || textInput === undefined) {
       return "Enter your name!";
     }
 
@@ -76,7 +80,7 @@ module.exports = function (pool) {
             day.checked = 'checked';
           }
         }
-        //  console.log('day', day);
+          // console.log('day', day);
 
       });
       return weekdays;
@@ -103,7 +107,8 @@ module.exports = function (pool) {
     reset,
     waiter,
     getWeekdays,
-    getShiftsforUser
+    getShiftsforUser,
+    getAllWaiters
   }
 
 }

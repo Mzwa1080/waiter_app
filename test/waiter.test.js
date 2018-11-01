@@ -18,6 +18,28 @@ describe('The Waiters App', async function () {
     });
     const waiters = Waiter(pool);
 
+
+    it('should return "PLEASE SELECT A DAY!" if there\'s no DAY selected', async function(){
+        
+       assert.deepEqual(await waiters.getShiftsforUser('Mzwa'), 'Please select a day!');
+    })
+
+    it('should return "ENTER YOUR NAME" if there\'s no name entered',async function(){
+       await waiters.assignShiftsToWaiter();
+        
+        assert.deepEqual("Enter your name!", await waiters.assignShiftsToWaiter());
+    })
+
+    it('should return 7 days for everyday of the week', async function (){
+
+        let getDays = await waiters.getWeekdays()
+        getDays = getDays.length;
+        // console.log(getDays)
+
+        assert.equal(7, getDays);
+     })
+
+
     it('should return All days of the week', async function () {
         const weekdays = await waiters.getWeekdays();
         for (let day of weekdays) {
@@ -34,30 +56,35 @@ describe('The Waiters App', async function () {
             { days: 'Saturday' }]);
     });
 
-    it('should return "PLEASE SELECT A DAY!" if there\'s no DAY selected', async function(){
-        
-       assert.deepEqual(await waiters.getShiftsforUser('Mzwa'), 'Please select a day!');
-    })
 
-    it('should return "ENTER YOUR NAME" if there\'s no name entered',async function(){
-       await waiters.assignShiftsToWaiter();
-        
-        assert.deepEqual("Enter your name!", await waiters.assignShiftsToWaiter());
-    })
+    it('should return Checked/Selected days', async function(){
+         insertNameAndDay = await waiters.assignShiftsToWaiter('Mzwa', ['Monday', 'Tuesday'])
+        //  await waiters.InsertPeople('Mzwa');
+        //  console.log('names & days ----', insertNameAndDay);
+         
+         let user = await waiters.getShiftsforUser('Mzwa')
+         let expectedDay = [ { id: 1, days: 'Sunday' },
+         { id: 2, days: 'Monday', checked: 'checked' },
+         { id: 3, days: 'Tuesday', checked: 'checked' },
+         { id: 4, days: 'Wednesday' },
+         { id: 5, days: 'Thursday' },
+         { id: 6, days: 'Friday' },
+         { id: 7, days: 'Saturday' } ];
 
-    // it('should return Checked/Selected days', async function(){
-    //      insertNameAndDay = await waiters.assignShiftsToWaiter('Mzwa', "Monday")
-    //      await waiters.InsertPeople('Mzwa');
-    //     //  console.log('names & days ----', insertNameAndDay);
-         
-    //      await waiters.getShiftsforUser('Mzwa', 'Monday')
-    //     //  console.log(await waiters.getShiftsforUser());
-         
-    //     // console.log(await waiters.getShiftsforUser('Mzwa', 'Monday'));
+        //  console.log(user);
         
-    //      assert.deepEqual(await waiters.getShiftsforUser() );
+         assert.deepEqual(expectedDay, user );
+     })
+
+    //  it('should return the total number of waiters ', async function (){
+    //     let waiter = await waiters.getAllWaiters('Mzwa');
+    //     // console.log(await waiters.getAllWaiters);
+        
+    //     console.log('Give me abantu', waiter);
+        
+
+    //     assert.equal(3, waiter)
     //  })
-
 
     after(function () {
         pool.end();
