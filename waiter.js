@@ -2,11 +2,10 @@ module.exports = function (pool) {
 
   async function InsertPeople(name) {
     await pool.query('insert into employees(name) values($1)', [name]);
-
   }
 
   async function getAllWaiters(){
-    let all = await pool.query('select * from employees')
+    let all = await pool.query('select name from employees')
     return all.rows;
   }
 

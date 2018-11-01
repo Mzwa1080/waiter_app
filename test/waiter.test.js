@@ -76,15 +76,18 @@ describe('The Waiters App', async function () {
          assert.deepEqual(expectedDay, user );
      })
 
-    //  it('should return the total number of waiters ', async function (){
-    //     let waiter = await waiters.getAllWaiters('Mzwa');
-    //     // console.log(await waiters.getAllWaiters);
+     it('should return the total number of waiters ', async function (){
+        await waiters.assignShiftsToWaiter('Mzwa', 'Wednesday');
+        await waiters.assignShiftsToWaiter('Ben', 'Saturday')
+        let waiter2 = await waiters.getAllWaiters('Mzwa')
         
-    //     console.log('Give me abantu', waiter);
+        // console.log(await waiters.getAllWaiters('Mzwa').length );
+        
+        console.log('', waiter2.length);
         
 
-    //     assert.equal(3, waiter)
-    //  })
+        assert.equal(2, waiter2.length)
+     })
 
     after(function () {
         pool.end();
