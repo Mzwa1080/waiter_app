@@ -33,24 +33,28 @@
   </tr>
 </table> --}}
 
-
-<div class="">
-  {{#each shifts}}
+  
+<div class="row">
+ {{#each shifts}}
   <div style="
     display:table-cell;
     border:1px solid #ccc;
     width:100%;
-    max-width:300px;
+    max-width:90%;
     padding: 1rem;
-    margin-right: 0.5rem;
-    " class="{{colour}}">
-    <h4>{{dayName}}</h4>
+    margin-right: 0.5rem;" 
+    class="row {{colour}}">
+    
+    <h5>{{dayName}}</h5>
     {{#each waiters}}
     <p>{{this}}</p>
     {{/each}}
   </div>
   {{/each}}
-</div>  
+  
+</div>
+
+ 
 
 {{!-- {
   dayName: "monday",
