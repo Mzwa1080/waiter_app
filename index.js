@@ -57,7 +57,7 @@ let newWaiterRoutes = waiterRoute(waiterInstance);
 
 app.get('/',   async function (req, res, next) {
   try {
-    let day_name = await waiterInstance.GetDays();
+    let day_name = await waiterInstance.getWeekdays();
     // console.log(day_name);
     if (req.session.worker) {
       res.redirect('/');
@@ -124,7 +124,7 @@ app.get('/waiters/:worker', async (req, res, next) => {
 app.get('/days', async (req, res, next) => {
   try {
     // const day_names = await pool.query('select * from weekdays');
-    let days = await waiterInstance.GetDays();
+    let days = await waiterInstance.getWeekdays();
     // console.log(days);
 
     const results = [];
