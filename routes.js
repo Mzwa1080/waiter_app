@@ -64,23 +64,50 @@ module.exports = function(route){
       
       }
 
-      async function daysRoute(req, res, next) {
+      async function insertToDays (req, res, next) {
         try {
           // const day_names = await pool.query('select * from weekdays');
-           let days = await route.getWeekdays();
+          let days = await route.getWeekdays();
           // console.log(days);
-           let results = await route.insertToDays();
-            // let shifts = await route.insertToDays();
-   
+      
+          const results = [];
+      
+          for (let day of days) {
+            let waitersResult = await route.insertPerson(day.id);
+      
+            const waiters = [];
+            // waitersResult.rows.map(function(waiter){
+            //   console.log('waiter', waiter);
+            //   waiters.push(waiter.name);
+            // });
+      
+            for (let waiter of waitersResult) {
+              waiters.push(waiter.name);
+            }
+      
+            results.push({
+              dayName: day.days,
+              waiters
+            })
+          }
+      
+          console.log("shifts", results);
       
           res.render('listOfWorkers', {
-            shifts: results,
-            dayName: day.days,
-            waiters
-
+            shifts: results
           });
       
       
+        } catch (err) {
+          next(err);
+        }
+      
+      }
+      async function clear (req, res, next) {
+        try {
+          await route.reset()
+      
+          res.redirect('/days')
         } catch (err) {
           next(err);
         }
@@ -91,6 +118,7 @@ module.exports = function(route){
           home,
           postRoute,
           waiters,
-          daysRoute
+          insertToDays,
+          clear
       }
 }

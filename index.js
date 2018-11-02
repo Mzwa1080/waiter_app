@@ -63,58 +63,9 @@ app.get('/waiters/:worker', newWaiterRoutes.waiters);
 
 
 
-app.get('/days', async (req, res, next) => {
-  try {
-    // const day_names = await pool.query('select * from weekdays');
-    let days = await waiterInstance.getWeekdays();
-    // console.log(days);
+app.get('/days', newWaiterRoutes.insertToDays);
 
-    const results = [];
-
-    for (let day of days) {
-      let waitersResult = await pool.query(
-        'select name from shifts join employees on shifts.name_id=employees.id where day_id=$1', [day.id]
-      );
-
-      const waiters = [];
-      // waitersResult.rows.map(function(waiter){
-      //   console.log('waiter', waiter);
-      //   waiters.push(waiter.name);
-      // });
-
-      for (let waiter of waitersResult.rows) {
-        waiters.push(waiter.name);
-      }
-
-      results.push({
-        dayName: day.days,
-        waiters
-      })
-    }
-
-    console.log("shifts", results);
-
-    res.render('listOfWorkers', {
-      shifts: results
-    });
-
-
-  } catch (err) {
-    next(err);
-  }
-
-});
-
-app.get('/reset', async (req, res, next) => {
-  try {
-    await waiterInstance.reset()
-
-    res.redirect('/days')
-  } catch (err) {
-    next(err);
-  }
-
-})
+app.get('/reset', newWaiterRoutes.clear)
 
 let PORT = process.env.PORT || 3202;
 app.listen(PORT, () => {

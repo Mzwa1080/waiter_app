@@ -83,7 +83,13 @@ module.exports = function (pool) {
     return await getWeekdays();
   }
   
+  async function insertPerson(day){
   
+    let waitersResult = await pool.query(
+      'select name from shifts join employees on shifts.name_id=employees.id where day_id=$1', [day]
+    )
+    return waitersResult.rows;
+  }
 
   
   async function reset() {
@@ -99,7 +105,8 @@ module.exports = function (pool) {
     waiter,
     getWeekdays,
     getShiftsforUser,
-    getAllWaiters
+    getAllWaiters,
+    insertPerson
   }
 
 }
