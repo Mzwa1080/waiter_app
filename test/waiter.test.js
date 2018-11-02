@@ -10,7 +10,6 @@ const pool = new Pool({
 });
 
 describe('The Waiters App', async function () {
- // ----******<(-_-)>-----  Instance -------<(-_-)> *****-
     beforeEach(async function () {
         // clean the tables before each test run
         await pool.query("delete from shifts"),
@@ -59,7 +58,6 @@ describe('The Waiters App', async function () {
 
     it('should return Checked/Selected days', async function(){
          insertNameAndDay = await waiters.assignShiftsToWaiter('Mzwa', ['Monday', 'Tuesday'])
-        //  await waiters.InsertPeople('Mzwa');
         //  console.log('names & days ----', insertNameAndDay);
          
          let user = await waiters.getShiftsforUser('Mzwa')
@@ -84,7 +82,6 @@ describe('The Waiters App', async function () {
         // console.log(await waiters.getAllWaiters('Mzwa').length );
         
         console.log('', waiter2.length);
-        
 
         assert.equal(2, waiter2.length)
      })

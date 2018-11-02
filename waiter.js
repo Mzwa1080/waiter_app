@@ -1,9 +1,5 @@
 module.exports = function (pool) {
 
-  async function InsertPeople(name) {
-    await pool.query('insert into employees(name) values($1)', [name]);
-  }
-
   async function getAllWaiters(){
     let all = await pool.query('select name from employees')
     return all.rows;
@@ -86,12 +82,9 @@ module.exports = function (pool) {
     }
     return await getWeekdays();
   }
-
   
-  // {
-  //   dayName = "Monday"
-  //   waiters= ['Mzwa', 'Ben']  
-  // }
+  
+
   
   async function reset() {
     await pool.query('delete from shifts');
@@ -100,7 +93,6 @@ module.exports = function (pool) {
   }
 
   return {
-    InsertPeople,
     assignShiftsToWaiter,
     // displayWaiters,
     reset,

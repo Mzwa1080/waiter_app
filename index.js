@@ -55,69 +55,11 @@ const pool = new Pool({
 let waiterInstance = Waiter(pool);
 let newWaiterRoutes = waiterRoute(waiterInstance);
 
-app.get('/',   async function (req, res, next) {
-  try {
-    let day_name = await waiterInstance.getWeekdays();
-    // console.log(day_name);
-    if (req.session.worker) {
-      res.redirect('/');
-    }
-    res.render('waiter', {
-      day_name
-    });
+app.get('/',  newWaiterRoutes.home);
 
-  } catch (err) {
-    next(err);
-  }
+app.post('/waiters', newWaiterRoutes.postRoute);
 
-});
-
-app.post('/waiters', async (req, res, next) => {
-  try {
-    let textInput = req.body.text;
-    let check = req.body.checkbox;
-
-
-    if(textInput === "" || textInput === undefined){
-      req.flash('info', 'Please insert your name!');
-      res.redirect('/');
-      return;
-    }
-
-    if(check === "" || check === undefined){
-      req.flash('info', 'Please insert your shist!');
-      res.redirect('/');
-      return;
-    }
-
-  
-     await waiterInstance.assignShiftsToWaiter(textInput, check);
-    res.redirect('/waiters/' + textInput);
-
-  } catch (err) {
-    next(err);
-  }
-
-});
-
-app.get('/waiters/:worker', async (req, res, next) => {
-  try {
-    let user = req.params.worker;
-    // console.log(user);
-    let shifts = await waiterInstance.getShiftsforUser(user);
-    console.log(shifts, "---shifts for user");
-    
-    // console.log(shifts);
-    res.render('workers', {
-      shifts,
-      user
-    });
-
-  } catch (err) {
-    next(err);
-  }
-
-});
+app.get('/waiters/:worker', newWaiterRoutes.waiters);
 
 
 
