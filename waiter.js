@@ -58,6 +58,11 @@ module.exports = function (pool) {
     
   }
 
+  async function getUsers(){
+    let names = await pool.query('select * from employees');
+    return names.rows;
+  }
+
   async function getShiftsforUser(user) {
     user = user.charAt(0).toUpperCase() + user.slice(1);
     if (user && user !== '') {
@@ -98,6 +103,11 @@ module.exports = function (pool) {
 
   }
 
+  async function checkNames(entered){
+    let name = await pool.query('select name from shifts join employees on shifts.name_id=employees.id where day_id=$1', [entered]);
+    return name.rows;
+  }
+
   return {
     assignShiftsToWaiter,
     // displayWaiters,
@@ -106,7 +116,9 @@ module.exports = function (pool) {
     getWeekdays,
     getShiftsforUser,
     getAllWaiters,
-    insertPerson
+    insertPerson,
+    checkNames,
+    getUsers
   }
 
 }

@@ -61,8 +61,6 @@ app.post('/waiters', newWaiterRoutes.postRoute);
 
 app.get('/waiters/:worker', newWaiterRoutes.waiters);
 
-
-
 app.get('/days', newWaiterRoutes.insertToDays);
 
 app.get('/reset', newWaiterRoutes.clear)

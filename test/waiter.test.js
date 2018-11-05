@@ -77,7 +77,7 @@ describe('The Waiters App', async function () {
      it('should return the total number of waiters ', async function (){
         await waiters.assignShiftsToWaiter('Mzwa', 'Wednesday');
         await waiters.assignShiftsToWaiter('Ben', 'Saturday')
-        let waiter2 = await waiters.getAllWaiters('Mzwa')
+        let waiter2 = await waiters.getAllWaiters()
         
         // console.log(await waiters.getAllWaiters('Mzwa').length );
         
@@ -85,6 +85,14 @@ describe('The Waiters App', async function () {
 
         assert.equal(2, waiter2.length)
      })
+
+    //  it('should return the names in the shifts table', async function (){
+
+    //     console.log(await waiters.assignShiftsToWaiter('Mzwwa', 'Tuesday'));
+         
+    //     await waiters.getAllWaiters()
+    //     assert.equal('mzwa', await waiters.checkNames())
+    //  })
 
     after(function () {
         pool.end();
