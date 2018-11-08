@@ -61,14 +61,14 @@ app.post('/waiters', newWaiterRoutes.postRoute);
 
 app.get('/waiters/:worker', newWaiterRoutes.waiters);
 
-//-------Post For The Button--------!!!
+//Post For The Button!!!
 app.post('/waiters/:username', newWaiterRoutes.waitersForButton);
 
 app.get('/days', newWaiterRoutes.insertToDays);
 
 app.get('/reset', newWaiterRoutes.clear)
 
-let PORT = process.env.PORT || 3022;
+let PORT = process.env.PORT || 3012;
 app.listen(PORT, () => {
   console.log('App starting on port', PORT);
 });

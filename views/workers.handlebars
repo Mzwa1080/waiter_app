@@ -7,8 +7,8 @@
     
   </div>
 
-
-  <div class="row">
+  <form action="/waiters/{{user}}" method="POST">
+    <div class="row">
 
     {{#each shifts}}
       <p class="col 2">
@@ -20,15 +20,17 @@
     {{/each}}
 </div>
 
+  
+  
     <div class="row">
 
       <a href="/"><i class="fas fa-arrow-circle-left small col 6"></i></a>
       <a href="/days" class="col 6"><i class="fas fa-users small "></i></a>
 
-   
-        <a href="/waiters/{{user}}" formmethod="post" type="submit" class="btn waves-effect green accent-4 col 6" name="enter" >Submit</a>
+
+      <input type="submit" class="btn waves-effect green accent-4 col 6" name="enter" value="submit" />
     
 
-
+</form>
     </div>
 </body>

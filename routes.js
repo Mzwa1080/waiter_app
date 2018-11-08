@@ -24,7 +24,7 @@ module.exports = function (route) {
       let textInput = req.body.text;
       let check = req.body.checkbox;
 
-
+      
       if (textInput === "" || textInput === undefined) {
         req.flash('info', 'Please insert your name!');
         res.redirect('/');
@@ -50,11 +50,9 @@ module.exports = function (route) {
   async function waiters(req, res, next) {
     try {
       let user = req.params.worker;
-      // console.log(user);
+   
       let shifts = await route.getShiftsforUser(user);
-      console.log(shifts, "---shifts for user");
-
-      // console.log(shifts);
+     
       res.render('workers', {
         shifts,
         user
@@ -70,12 +68,13 @@ module.exports = function (route) {
   async function waitersForButton(req, res, next) {
     try {
       let user = req.params.username;
-      // let textInput = req.body.text;
+      let textInput = req.params.username;
+   
       let check = req.body.checkbox;
+   
       
-      let shifts = await route.checkBox(check);
-      await route.checkBox(check)
-      // console.log(await route.assignShiftsToWaiter(textInput, check));
+      let shifts = await route.assignShiftsToWaiter(textInput, check);
+      await route.assignShiftsToWaiter(check)
       
       res.render('workers', {
         shifts,
@@ -116,7 +115,6 @@ module.exports = function (route) {
         })
       }
 
-      console.log("shifts", results);
 
       res.render('listOfWorkers', {
         shifts: results

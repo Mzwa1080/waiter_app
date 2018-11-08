@@ -21,13 +21,15 @@ module.exports = function (pool) {
       check = [check];
     }
 
+
     let weekdayIds = [];
     if (textInput === "" || textInput === undefined) {
       return "Enter your name!";
     }
+    console.log('----------------',check);
 
-    textInput = textInput.charAt(0).toUpperCase() + textInput.slice(1);
-    // console.log("username", textInput);
+    // textInput = textInput.charAt(0).toUpperCase() + textInput.slice(1);
+ 
     
     let userId = await pool.query('select id from employees where name=$1', [textInput]);
     if (userId.rowCount === 0 ) {
@@ -35,15 +37,14 @@ module.exports = function (pool) {
       userId = await pool.query('select id from employees where name=$1', [textInput]);
     }
     let found = await pool.query('select id from shifts where name_id=$1', [ userId.rows[0].id]);
-    console.log(found.rows);
-    
+
     if(found.rowCount === 0){
      for (let weekday of weekdayIds) {
       await pool.query('insert into shifts (day_id, name_id) values ($1, $2)', [weekday, userId.rows[0].id]);
       
     }
     }
-    
+
     await pool.query('delete from shifts where name_id=$1', [ userId.rows[0].id])
     // first get previous shifts from database and remove duplicates from the new shifts
     let userShifts = await getShiftsforUser(textInput);
@@ -53,8 +54,8 @@ module.exports = function (pool) {
         delete check[i];
       }
     }
-    // console.log('userShift----', userShifts);
 
+    
     for (let day of check) {
       let dayId = await pool.query('select id from weekdays where days=$1', [day]);
       if (dayId.rowCount > 0) {
@@ -69,40 +70,13 @@ module.exports = function (pool) {
     
   }
 
-  // async function checkBox(check){
-  //   let weekdayIds = [];
-  //   await pool.query('delete from shifts where name_id=$1', [ userId.rows[0].id])
-  //   // first get previous shifts from database and remove duplicates from the new shifts
-  //   let userShifts = await getShiftsforUser(textInput);
-  //   for (let shift of userShifts) {
-  //     if (shift.checked) {
-  //       let i = check.indexOf(shift.days);
-  //       delete check[i];
-  //     }
-  //   }
-  //   // console.log('userShift----', userShifts);
-
-  //   for (let day of check) {
-  //     let dayId = await pool.query('select id from weekdays where days=$1', [day]);
-  //     if (dayId.rowCount > 0) {
-  //       weekdayIds.push(dayId.rows[0].id);
-  //     }
-  //   }
-  //   // now add the new shifts into the database
-  //   for (let weekday of weekdayIds) {
-  //     await pool.query('insert into shifts (day_id, name_id) values ($1, $2)', [weekday, userId.rows[0].id]);
-      
-  //   }
-    
-  // }
-  
   async function getUsers(){
     let names = await pool.query('select * from employees');
     return names.rows;
   }
 
   async function getShiftsforUser(user) {
-    user = user.charAt(0).toUpperCase() + user.slice(1);
+    // user = user.charAt(0).toUpperCase() + user.slice(1);
     if (user && user !== '') {
       const foundUser = await pool.query('select id from employees where name=$1', [user]);
       if (foundUser.rowCount < 1) {
@@ -118,7 +92,7 @@ module.exports = function (pool) {
             day.checked = 'checked';
           }
         }
-          // console.log('day', day);
+        
 
       });
       return weekdays;
