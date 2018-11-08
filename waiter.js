@@ -16,12 +16,11 @@ module.exports = function (pool) {
     return name.rows;
   }
 
-  async function assignShiftsToWaiter(textInput, check1) {
-    if (check1 && typeof check1 === 'string') {
-      check1 = [check1];
+  async function assignShiftsToWaiter(textInput, check) {
+    if (check && typeof check === 'string') {
+      check = [check];
     }
 
-let check = await getWeekdays();
 
     let weekdayIds = [];
     if (textInput === "" || textInput === undefined) {
