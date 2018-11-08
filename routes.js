@@ -67,18 +67,17 @@ module.exports = function (route) {
 
   async function waitersForButton(req, res, next) {
     try {
-      let user = req.params.username;
       let textInput = req.params.username;
    
-      let check = req.body.checkbox;
+      let checkBox = req.body.checkbox;
    
       
-      let shifts = await route.assignShiftsToWaiter(textInput, check);
-      await route.assignShiftsToWaiter(check)
+      let shifts = await route.assignShiftsToWaiter(textInput, checkBox);
+      // await route.assignShiftsToWaiter(textInput, checkBox)
       
       res.render('workers', {
         shifts,
-        user
+        textInput
       });
 
     } catch (err) {
