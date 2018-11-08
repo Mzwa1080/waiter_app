@@ -66,16 +66,28 @@ module.exports = function (route) {
 
   }
 
-  // async function getUsers(req, res, next){
-  //   try {
+
+  async function waitersForButton(req, res, next) {
+    try {
+      let user = req.params.username;
+      // let textInput = req.body.text;
+      let check = req.body.checkbox;
       
+      let shifts = await route.checkBox(check);
+      await route.checkBox(check)
+      // console.log(await route.assignShiftsToWaiter(textInput, check));
+      
+      res.render('workers', {
+        shifts,
+        user
+      });
 
-  //     res.render('home', {users})
+    } catch (err) {
+      next(err);
+    }
 
-  //   } catch (err) {
-  //     next(err);
-  //   }
-  // }
+  }
+
 
   async function insertToDays(req, res, next) {
     try {
@@ -133,6 +145,7 @@ module.exports = function (route) {
     waiters,
     insertToDays,
     clear,
+    waitersForButton
     // getUsers
   }
 }
