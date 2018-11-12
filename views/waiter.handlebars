@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<body>
+<body class="deep-orange accent-2">
 
   <div class="row">
     <div class="">
@@ -15,7 +15,7 @@
 
     <div class=" row">
       <label for="first_name">First Name</label>
-      <input id="last_name" type="text" name="text" class="validate col 8" pattern="[A-Za-z]{1,40}" title="Example: Mzwa">
+      <input id="last_name" type="text" name="text" class="validate col 6" pattern="[A-Za-z]{1,40}" title="Example: Mzwa">
     </div>
     <br>
 
@@ -23,43 +23,47 @@
     <div class="row">
 
       {{#each day_name}}
-        <p class="col 2">
-          <label>
-            <input type="checkbox" name="checkbox"{{checked}} value="{{days}}"/>
-            <span>{{days}}</span>
+      <p class="col 2">
+        <label>
+          <input type="checkbox" name="checkbox" {{checked}} value="{{days}}" />
+          <span>{{days}}</span>
         </label>
-        </p>
+      </p>
       {{/each}}
 
     </div>
 
-      <div class="row">
+      {{#if messages.info}}
+        <div class="col 12">
+          <h5 href="/flash" name="flash" class="error center" style="color:red; font-size:25px; font-weight:bolder;">{{messages.info}}</h5>
+        </div>
+      {{/if}}
+
+    <div class="col 8 center">
+  
         <button class="btn waves-effect green accent-4 col 6" type="submit" name="enter" value="">Submit</button>
-        <a href="/days" class="col 6"><i class="fas fa-users small "></i></a>
-      </div>
-{{!-- 
-      <div class="row">
-        <button class="btn waves-effect green accent-4 col 6 right" value="submit" href="/People"></button>
-      </div> --}}
+
+        <a href="/days" class="col 3" style="padding:10%;"><i class="fas fa-users small "></i></a>
+
+
+        <a class='dropdown-trigger btn waves-effect green accent-4 col 6' href='#' data-target='dropdown1'>Available Waiters</a>
+        <ul id='dropdown1' class='dropdown-content'>
+          {{#each users}}
+          <li><a href="/waiters/{{name}}">{{name}}</a></li>
+          {{/each}}
+        </ul>
+
+    </div>
 
   </form>
 
-  {{#if messages.info}}
-    <div class="col 12">
-      <h5 href="/flash" name="flash" class="error">{{messages.info}}</h5>
-    </div>
-  {{/if}}
 
 
-  <ul>
-    {{#each users}}
-    <li>
-      <a href="/waiters/{{name}}">{{name}}</a>
-    </li>
-    {{/each}}
-  </ul>
-
-
+          <div class="footer-copyright grey">
+            <div class="container center" style="font-size:17px; font-weight:bolder;">
+            © 2018 Mzwa Louw
+            </div>
+          </div>
 
 
   </div>

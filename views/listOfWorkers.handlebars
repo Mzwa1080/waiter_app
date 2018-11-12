@@ -1,4 +1,8 @@
-<div class="row">
+
+
+<body class="deep-orange accent-2">
+  
+  <div class="row yellow lighten-2">
 
   <h3 class="center">Waiters Roster</h3>
   <p class="col 4">Page showing people that are going to be available on that particular day.</p>
@@ -7,46 +11,21 @@
     {{!-- <a href="/reset" class="btn waves-effect darken-2  right " type="" name="reset">Reset</a> --}}
     <a href="/"><i class="fas fa-home small roster  btn home  right top"></i></a>
    
-    <a class="waves-effect waves-light btn"><i class="far fa-trash-alt"></i></a>
+    <a class="waves-effect waves-light btn" href="/reset"><i class="far fa-trash-alt"></i></a>
 
   </div>
 
 
 </div>
 
-<div class="row"> 
+<div class="row yellow lighten-2"> 
      <h6 style="font-size:bold;">Color Legend</h6>
-     Full<div class="col 6" style="background-color:green; width:5%; height:5%;"></div> <br> <br>
-   
-    Danger<div class="col 6" style="background-color:red; width:5%; height:5%;"></div>
-
+     <div class="col 12 center" style="background-color:green; width:10%; height:5%;">Full</div> <br> <br>
+    <div class="col 12 center" style="background-color:red; width:10%; height:5%;"> Danger </div>
 </div>
 
-
-
-
-{{!-- <table class="col 12">
-  <tr>
-    {{#each shifts}}
-    <td class="col 2 {{color}}" value="{{dayName}}">{{dayName}}</td>
-    {{/each}}
-  </tr>
-
-  <tr>
-    {{#each shifts}}
-    <td class="day-waiters">
-      {{#each waiters}} 
-      <tr>
-        <td>{{this}}</td>
-      </tr>
-       {{/each}} 
-    </td>
-    {{/each}}
-  </tr>
-</table> --}}
-
   
-<div class="row">
+<div class="row yellow lighten-2">
  {{#each shifts}}
   <div style="
     display:table-cell;
@@ -66,5 +45,15 @@
   
 </div>
 
+          <div class="footer-copyright grey">
+            <div class="container center" style="font-size:17px; font-weight:bolder;">
+            © 2018 Mzwa Louw
+            </div>
+          </div>
+
 
 </div>
+
+
+
+</body>
