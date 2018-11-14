@@ -28,7 +28,7 @@ module.exports = function (pool) {
     }
     console.log('----------------',check);
 
-    // textInput = textInput.charAt(0).toUpperCase() + textInput.slice(1);
+    //  textInput = textInput.charAt(0).toUpperCase() + textInput.slice(1);
  
     
     let userId = await pool.query('select id from employees where name=$1', [textInput]);

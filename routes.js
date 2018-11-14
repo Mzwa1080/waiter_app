@@ -24,7 +24,8 @@ module.exports = function (route) {
       let textInput = req.body.text;
       let check = req.body.checkbox;
 
-      
+      textInput = textInput.charAt(0).toUpperCase() + textInput.slice(1);
+
       if (textInput === "" || textInput === undefined) {
         req.flash('info', 'Please insert your name!');
         res.redirect('/');
