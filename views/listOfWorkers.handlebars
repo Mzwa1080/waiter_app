@@ -11,7 +11,20 @@
     {{!-- <a href="/reset" class="btn waves-effect darken-2  right " type="" name="reset">Reset</a> --}}
     <a href="/"><i class="fas fa-home small roster  btn home  right top"></i></a>
    
-    <a class="waves-effect waves-light btn" href="/reset"><i class="far fa-trash-alt"></i></a>
+<!-- Modal Trigger -->
+  <a class="waves-effect waves-light btn modal-trigger" href="#modal1"><i class="far fa-trash-alt"></i></a>
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal grey">
+    <div class="modal-content">
+      <h4>Delete Waiters</h4>
+      <p>Are you sure you want to delete the waiters?</p>
+    </div>
+    <div class="modal-footer">
+      <a  href="/reset" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+      <a href="/days" class="modal-close waves-effect waves-green btn-flat">Disagree</a>
+    </div>
+  </div>
 
   </div>
 
@@ -23,6 +36,7 @@
      <div class="col 12 center" style="background-color:green; width:10%; height:5%;">Full</div> <br> <br>
     <div class="col 12 center" style="background-color:red; width:10%; height:5%;"> Danger </div>
 </div>
+
 
   
 <div class="row yellow lighten-2">
